@@ -15,21 +15,24 @@ DB_NAME : Database name
 PORT: Api server port
 ## How to run:
 
-#####Local
+###Local
+
 No need to run migration in local as db sync is on.
 
 ``npm run watch-ts``
 
 
-#####Production
-######Migration
+###Production
+
+####Migration
+
 ``npm run migration:generate -- -n "<migration name>"``
 
 ``npm run migration:run``
 
-######Deployment
+####Deployment
 ``npm run build-ts``
-######Run
+####Run
 ``npm start``
 
 
