@@ -1,32 +1,40 @@
-// import path from 'path';
+import 'reflect-metadata';
+import { createConnection } from 'typeorm';
 const morgan = require('morgan');
 
-import app from './config/express';
-import routes from './routes/index.route';
+import express from './config/express';
+import application from './constants/application';
+
 import * as errorHandler from './middlewares/apiErrorHandler';
 import joiErrorHandler from './middlewares/joiErrorHandler';
+import logger from './config/logger';
+import authenticate from './middlewares/authenticate';
+
+import indexRoute from './routes/index.route';
 
 const PORT = process.env.PORT || 5000;
 
-// Swagger API documentation
-// app.get('/swagger.json', (req, res) => {
-//     res.json(swagger);
-// });
+createConnection().then(() => {
+    logger.info('database connection created');
+    express.use(morgan('dev'));
 
-app.use(morgan('dev'));
+    express.use(authenticate);
 
 // Router
-app.use('/api', routes);
+    express.use(application.url.base, indexRoute);
 
 // Joi Error Handler
-app.use(joiErrorHandler);
-
+    express.use(joiErrorHandler);
 // Error Handler
-app.use(errorHandler.notFoundErrorHandler);
-app.use(errorHandler.errorHandler);
+    express.use(errorHandler.notFoundErrorHandler);
 
-app.listen(PORT, () => {
-    console.log(`Server running at ${PORT}`);
+    express.use(errorHandler.errorHandler);
+
+    express.listen(PORT, () => {
+        logger.info(`Server running at ${PORT}`);
+    });
+}).catch((error) => {
+    logger.info(`Database connection failed with error ${error}`);
 });
 
-export default app;
+export default express;

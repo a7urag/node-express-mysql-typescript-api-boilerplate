@@ -1,7 +1,13 @@
 import express from 'express';
-import HttpStatus from 'http-status-codes';
-// import jwt from 'jsonwebtoken';
-import User from '../services/models/user.model';
+import httpStatusCodes from 'http-status-codes';
+
+import userService from '../services/user.service';
+import apiResponse from '../utilities/apiResponse';
+import { verifyCookie } from '../utilities/encryptionUtils';
+import { extractCookieFromRequest } from '../utilities/apiUtilities';
+import application from '../constants/application';
+import Constants from '../constants';
+import IRequest from '../types/IRequest';
 
 /**
  * Route authentication middleware to verify a token
@@ -12,31 +18,31 @@ import User from '../services/models/user.model';
  *
  */
 
-export default (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  // const authorizationHeader = req.headers.authorization;
-  // let token;
-  // if (authorizationHeader) {
-  //   token = authorizationHeader;
-  // }
-  //
-  // if (token) {
-  //   jwt.verify(token, process.env.TOKEN_SECRET_KEY, (err, decoded) => {
-  //     if (err) {
-  //       res.status(HttpStatus.UNAUTHORIZED).json({ error: 'You are not authorized to perform this operation!' });
-  //     } else {
-  //       User.where( 'id', decoded.id ).fetch().then((user) => {
-  //         if (!user) {
-  //           res.status(HttpStatus.NOT_FOUND).json({ error: 'No such user' });
-  //         } else {
-  //           req.currentUser = user;
-  //           next();
-  //         }
-  //       });
-  //     }
-  //   });
-  // } else {
-  //   res.status(HttpStatus.FORBIDDEN).json({
-  //     error: 'No token provided',
-  //   });
-  // }
+export default async (req: IRequest, res: express.Response, next: express.NextFunction) => {
+  if (application.authorizationIgnorePath
+    .indexOf(`${req.originalUrl}`) === -1) {
+    const authorizationHeader = extractCookieFromRequest(req, Constants.Cookie.COOKIE_USER);
+    if (authorizationHeader) {
+      const decoded = await verifyCookie(authorizationHeader);
+      if (decoded) {
+        const user  = await userService.getUserById(decoded.data[Constants.Cookie.KEY_USER_ID]);
+        if (user) {
+          // @ts-ignore
+          req.user = user;
+          req.dashboard = req.headers['context'] === 'dashboard' && user.isStaff;
+        } else {
+          apiResponse.error(res, httpStatusCodes.UNAUTHORIZED);
+          return;
+        }
+      } else {
+        apiResponse.error(res, httpStatusCodes.UNAUTHORIZED);
+        return;
+      }
+    } else {
+      apiResponse.error(res, httpStatusCodes.FORBIDDEN);
+      return;
+    }
+  }
+
+  next();
 };
