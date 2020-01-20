@@ -36,7 +36,7 @@ No need to run migration in local as db sync is on.
 ``npm start``
 
 ## TODO:
-[] Use yarn instead of npm
-[] Move user auth on api request to redis
+- [ ] Use yarn instead of npm
+- [ ] Move user auth on api request to redis
 
 
