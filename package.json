@@ -6,7 +6,7 @@
   "scripts": {
     "test": "test",
     "build-ts": "rm -rf dist/ && tsc",
-    "start": "npm run serve",
+    "start": "yarn serve",
     "serve": "node dist/index.js",
     "watch-node": "nodemon",
     "watch-ts": "tsc -w",
