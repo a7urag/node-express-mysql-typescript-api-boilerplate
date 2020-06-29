@@ -78,26 +78,26 @@ Add these keys as environment variable
 
 No need to run migration in local as db sync is true.
 
-    npm run watch-ts  
+    yarn watch-ts  
 
 
 #### Production
 
 ##### Migration
 
-    npm run migration:generate -- -n "<migration name>"
+    yarn migration:generate -- -n "<migration name>"
 
-    npm run migration:run
+    yarn migration:run
 
 ##### Deployment
-    npm run build-ts
+    yarn build-ts
 ##### Run
-    npm start  
+    yarn start  
 
 PS: using `pm2` for production environment
 
 ## TODO:
-- [ ] Use yarn instead of npm
+- [x] Use yarn instead of npm
 - [ ] Move user auth on api request to redis
 - [ ] Add social login support
 
