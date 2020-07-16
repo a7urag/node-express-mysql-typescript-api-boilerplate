@@ -11,6 +11,7 @@ const extractUserIdFromRequest = (req: IRequest) => {
 
 const extractQueryForRequest = (req: Request, query: string) => {
   if (req.query[query]) {
+    // @ts-ignore
     return JSON.parse(req.query[query]);
   }
   return [];
