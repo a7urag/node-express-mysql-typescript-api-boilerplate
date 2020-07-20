@@ -93,6 +93,10 @@ No need to run migration in local as db sync is true.
     yarn build-ts
 ##### Run
     yarn start  
+    
+#### Test
+##### Unit tests
+    yarn test
 
 PS: using `pm2` for production environment
 
