@@ -54,13 +54,4 @@ describe('Test api utilities', () => {
     actual = extractCookieFromRequest(request, 'Authorization');
     expect(actual).toBe('test2');
   });
-
-  test('restrictToStaff', () => {
-    let request: any = { user: { id: 1 } };
-    let actual: any = restrictToStaff(request, undefined, () => {});
-    expect(actual).toBe(1);
-    request = { user: null };
-    actual = extractUserIdFromRequest(request);
-    expect(actual).toBe(null);
-  });
 });
