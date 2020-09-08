@@ -24,7 +24,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
           node-version: ${{ matrix.node-version }}
-    - run: npm install
+    - run: yarn install
     # Runs a single command using the runners shell
     #- name: Run a one-line script
      # run: echo Hello, world!
@@ -39,4 +39,4 @@ jobs:
         message: # default is Automatically built unbuilt typescript
         # The list of directories to build the typescripts from, if omitted then it will use the base project directory. The list is seperated by comma that's not found within quotations.
         directories: # optional
-    - run: npm test
+    - run: yarn test
