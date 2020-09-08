@@ -6,7 +6,7 @@ import IRequest from '../types/IRequest';
 import ApiResponse from './apiResponse';
 
 const extractUserIdFromRequest = (req: IRequest) => {
-  return req.user.id;
+  return req.user && req.user.id;
 };
 
 const extractQueryForRequest = (req: Request, query: string) => {
