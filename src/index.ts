@@ -14,27 +14,29 @@ import indexRoute from './routes/index.route';
 
 const PORT = process.env.PORT || 5000;
 
-createConnection().then(() => {
+createConnection()
+  .then(() => {
     logger.info('database connection created');
     express.use(morgan('dev'));
 
     express.use(authenticate);
 
-// Router
+    // Router
     express.use(application.url.base, indexRoute);
 
-// Joi Error Handler
+    // Joi Error Handler
     express.use(joiErrorHandler);
-// Error Handler
+    // Error Handler
     express.use(errorHandler.notFoundErrorHandler);
 
     express.use(errorHandler.errorHandler);
 
     express.listen(PORT, () => {
-        logger.info(`Server running at ${PORT}`);
+      logger.info(`Server running at ${PORT}`);
     });
-}).catch((error) => {
+  })
+  .catch((error: Error) => {
     logger.info(`Database connection failed with error ${error}`);
-});
+  });
 
 export default express;
