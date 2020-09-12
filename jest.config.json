@@ -2,7 +2,7 @@
   "verbose": true,
   "rootDir": ".",
   "preset": "ts-jest",
-  "testMatch": ["**/*.spec.ts"],
+  "testMatch": ["**/*.spec.ts", "**/*.test.ts"],
   "coveragePathIgnorePatterns": ["tests/"],
   "moduleFileExtensions": ["ts", "js"],
   "testEnvironment": "node",
