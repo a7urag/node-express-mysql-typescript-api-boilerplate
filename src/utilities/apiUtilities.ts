@@ -23,7 +23,7 @@ const extractCookieFromRequest = (req: Request, key: string) => {
   }
   if (req.headers.cookie) {
     const results = req.headers.cookie.split(';');
-    const filtered = results.filter((result) => {
+    const filtered = results.filter((result: string) => {
       return result.startsWith(`${key}=`);
     });
     if (filtered.length > 0) {
@@ -38,7 +38,11 @@ const sanitizeUser = (user: User) => {
   return userWithOutPassword;
 };
 
-const restrictToStaff = (req: IRequest, res: Response, next: NextFunction) => {
+const restrictToStaff = (
+  req: IRequest,
+  res: Response,
+  next: NextFunction,
+) => {
   if (!req.user.isStaff) {
     ApiResponse.error(res, HttpStatusCode.FORBIDDEN);
     return;

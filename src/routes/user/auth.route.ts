@@ -7,8 +7,16 @@ const router = express.Router();
 
 const schemaValidator = require('express-joi-validator');
 
-router.post('/register', schemaValidator(userSchema.register), userController.register);
-router.post('/login', schemaValidator(userSchema.login), userController.login);
+router.post(
+  '/register',
+  schemaValidator(userSchema.register),
+  userController.register,
+);
+router.post(
+  '/login',
+  schemaValidator(userSchema.login),
+  userController.login,
+);
 router.get('/me', userController.self);
 
 export default router;

@@ -5,13 +5,18 @@ import { sanitizeUser } from '../utilities/apiUtilities';
 
 const getUserById = async (userId: number) => {
   try {
-    return await sanitizeUser(await getRepository(User).findOne({ id: userId }));
+    return await sanitizeUser(
+      await getRepository(User).findOne({ id: userId }),
+    );
   } catch (e) {
     return null;
   }
 };
 
-const getUserByEmail = async (email: string, getHash: boolean = false) => {
+const getUserByEmail = async (
+  email: string,
+  getHash: boolean = false,
+) => {
   try {
     return await getRepository(User).findOne({ email });
   } catch (e) {
@@ -19,7 +24,11 @@ const getUserByEmail = async (email: string, getHash: boolean = false) => {
   }
 };
 
-const createUser = async (email: string, pass: string, name: string = '') => {
+const createUser = async (
+  email: string,
+  pass: string,
+  name: string = '',
+) => {
   const newUser = new User();
   newUser.email = email;
   newUser.password = await generateHash(pass, 10);
