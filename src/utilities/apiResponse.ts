@@ -12,9 +12,12 @@ export interface ICookie {
   value: string;
 }
 export default class ApiResponse {
-  static result = (res: Response, data: object,
-                   status: number = 200,
-                   cookie: ICookie = null) => {
+  static result = (
+    res: Response,
+    data: object,
+    status: number = 200,
+    cookie: ICookie = null,
+  ) => {
     res.status(status);
     if (cookie) {
       res.cookie(cookie.key, cookie.value);
@@ -23,12 +26,14 @@ export default class ApiResponse {
       data,
       success: true,
     });
-  }
+  };
 
-  static error = (res: Response,
-                  status: number = 400,
-                  error: string = httpStatusCodes.getStatusText(status),
-                  override: IOverrideRequest = null) => {
+  static error = (
+    res: Response,
+    status: number = 400,
+    error: string = httpStatusCodes.getStatusText(status),
+    override: IOverrideRequest = null,
+  ) => {
     res.status(status).json({
       override,
       error: {
@@ -36,9 +41,9 @@ export default class ApiResponse {
       },
       success: false,
     });
-  }
+  };
 
   static setCookie = (res: Response, key: string, value: string) => {
     res.cookie(key, value);
-  }
+  };
 }

@@ -1,7 +1,11 @@
 import {
-  extractCookieFromRequest, extractQueryForRequest, extractUserIdFromRequest, restrictToStaff,
+  extractCookieFromRequest,
+  extractQueryForRequest,
+  extractUserIdFromRequest,
+  restrictToStaff,
   sanitizeUser,
-} from '../../src/utilities/apiUtilities';
+} from './apiUtilities';
+import { mockResponse } from '../tests/unit/apiMock';
 
 describe('Test api utilities', () => {
   test('extractUserIdFromRequest', () => {
@@ -32,7 +36,11 @@ describe('Test api utilities', () => {
   });
 
   test('sanitizeUser with possible values', () => {
-    const user: any = { id: 1, password: '12312321', email: '213@gmail.com' };
+    const user: any = {
+      id: 1,
+      password: '12312321',
+      email: '213@gmail.com',
+    };
     const actual = sanitizeUser(user);
     expect(actual).toStrictEqual({ id: 1, email: '213@gmail.com' });
   });
@@ -50,8 +58,41 @@ describe('Test api utilities', () => {
     actual = extractCookieFromRequest(request, 'Authorization');
     expect(actual).toBe('test2');
 
-      request = { headers: { cookie: 'Authorization=test2;randomCookie=nouse' } };
+    request = {
+      headers: { cookie: 'Authorization=test2;randomCookie=nouse' },
+    };
     actual = extractCookieFromRequest(request, 'Authorization');
     expect(actual).toBe('test2');
+  });
+
+  test('restrictToStaff unauthorised', () => {
+    const next = jest.fn();
+    const response = mockResponse();
+    restrictToStaff(
+      {
+        // @ts-ignore
+        user: { isStaff: false },
+      },
+      response,
+      next,
+    );
+    expect(response.status).toHaveBeenCalledWith(403);
+    expect(response.status).toHaveBeenCalledTimes(1);
+    expect(next).toHaveBeenCalledTimes(0);
+  });
+
+  test('restrictToStaff success', () => {
+    const next = jest.fn();
+    const response = mockResponse();
+    restrictToStaff(
+      {
+        // @ts-ignore
+        user: { isStaff: true },
+      },
+      response,
+      next,
+    );
+    expect(response.status).toHaveBeenCalledTimes(0);
+    expect(next).toHaveBeenCalledTimes(1);
   });
 });
