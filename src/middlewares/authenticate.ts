@@ -18,18 +18,31 @@ import IRequest from '../types/IRequest';
  *
  */
 
-export default async (req: IRequest, res: express.Response, next: express.NextFunction) => {
-  if (application.authorizationIgnorePath
-    .indexOf(`${req.originalUrl}`) === -1) {
-    const authorizationHeader = extractCookieFromRequest(req, Constants.Cookie.COOKIE_USER);
+export default async (
+  req: IRequest,
+  res: express.Response,
+  next: express.NextFunction,
+) => {
+  if (
+    application.authorizationIgnorePath.indexOf(
+      `${req.originalUrl}`,
+    ) === -1
+  ) {
+    const authorizationHeader = extractCookieFromRequest(
+      req,
+      Constants.Cookie.COOKIE_USER,
+    );
     if (authorizationHeader) {
       const decoded = await verifyCookie(authorizationHeader);
       if (decoded) {
-        const user  = await userService.getUserById(decoded.data[Constants.Cookie.KEY_USER_ID]);
+        const user = await userService.getUserById(
+          decoded.data[Constants.Cookie.KEY_USER_ID],
+        );
         if (user) {
           // @ts-ignore
           req.user = user;
-          req.dashboard = req.headers['context'] === 'dashboard' && user.isStaff;
+          req.dashboard =
+            req.headers['context'] === 'dashboard' && user.isStaff;
         } else {
           apiResponse.error(res, httpStatusCodes.UNAUTHORIZED);
           return;
