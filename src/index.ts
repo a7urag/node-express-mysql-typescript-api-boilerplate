@@ -1,14 +1,14 @@
 import 'reflect-metadata';
-import { createConnection } from 'typeorm';
+import { Connection, createConnection } from 'typeorm';
 
 import logger from './config/logger';
 import app from './config/express';
 const PORT = process.env.PORT || 5000;
 
 createConnection()
-  .then(() => {
+  .then((connection: Connection) => {
     logger.info('database connection created');
-    app.listen(PORT, () => {
+    app(connection).listen(PORT, () => {
       logger.info(`Server running at ${PORT}`);
     });
   })
