@@ -1,6 +1,6 @@
-import AdminBro from 'admin-bro';
+const AdminBro = require('admin-bro');
 // @ts-ignore
-import adminBroExpress from '@admin-bro/express';
+const adminBroExpress  = require('@admin-bro/express');
 import { Database, Resource } from '@admin-bro/typeorm';
 import { Connection } from 'typeorm';
 import { User } from '../entities/user/user.entity';

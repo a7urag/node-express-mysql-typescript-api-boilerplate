@@ -3,7 +3,7 @@
     "module": "commonjs",
     "esModuleInterop": true,
     "target": "es3",
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "moduleResolution": "node",
     "sourceMap": false,
     "outDir": "dist",
@@ -12,16 +12,12 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "paths": {
-      "*": [
-        "node_modules/*",
-        "src/types/*"
-      ]
+      "*": ["node_modules/*", "src/types/*"],
+      "react": ["node_modules/@types/react"],
+      "admin-bro": ["node_modules/admin-bro"]
     },
-    "lib": [
-      "es2015", "es5", "es6", "dom"
-    ]
+    "lib": ["es2015", "es5", "es6", "dom"]
   },
-  "include": [
-    "src/**/*"
-  ]
+  "include": ["./src/**/*"],
+  "exclude": ["./node_modules/**"]
 }
