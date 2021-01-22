@@ -3,12 +3,13 @@ import routes from './auth.route';
 import app from '../../config/express';
 
 import userService from '../../services/user.service';
+import { getConnection } from 'typeorm';
 
 describe('Test User Auth routes', () => {
   beforeEach(() => {});
   it('User register with valid body', (done: CallbackHandler) => {
     userService.createUser = jest.fn().mockReturnValue({ id: 1 });
-    return request(app.use(routes))
+    return request(app(getConnection()).use(routes))
       .post('/api/user/auth/register')
       .send({
         email: 'test@gmail.com',
@@ -28,7 +29,7 @@ describe('Test User Auth routes', () => {
   it('User register with invalid body', (done: CallbackHandler) => {
     userService.createUser = jest.fn().mockReturnValue({ id: 1 });
 
-    return request(app.use(routes))
+    return request(app(getConnection()).use(routes))
       .post('/api/user/auth/register')
       .expect(500)
       .expect((res: any) => {
@@ -39,7 +40,7 @@ describe('Test User Auth routes', () => {
 
   it('User register with invalid user', (done: CallbackHandler) => {
     userService.createUser = jest.fn().mockReturnValue(undefined);
-    return request(app.use(routes))
+    return request(app(getConnection()).use(routes))
       .post('/api/user/auth/register')
       .send({
         email: 'test@gmail.com',
@@ -58,7 +59,7 @@ describe('Test User Auth routes', () => {
       // @ts-ignore
       throw new Error({ code: 'ER_DUP_ENTRY' });
     });
-    return request(app.use(routes))
+    return request(app(getConnection()).use(routes))
       .post('/api/user/auth/register')
       .send({
         email: 'test@gmail.com',
