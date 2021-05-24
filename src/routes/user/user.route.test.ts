@@ -30,7 +30,7 @@ describe('Test User Auth routes', () => {
 
     return request(app.use(routes))
       .post('/api/user/auth/register')
-      .expect(500)
+      .expect(400)
       .expect((res: any) => {
         expect(userService.createUser).toHaveBeenCalledTimes(0);
       })

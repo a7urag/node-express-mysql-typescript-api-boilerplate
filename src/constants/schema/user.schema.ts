@@ -1,22 +1,19 @@
-import joi from 'joi';
-
+import { celebrate, Joi, errors, Segments } from 'celebrate';
 export default {
   register: {
-    body: {
-      email: joi.string().email().required(),
-      password: joi.string().min(6).max(32).required(),
-      name: joi.string().required(),
+    [Segments.BODY]: {
+      email: Joi.string().email().required(),
+      password: Joi.string().min(6).max(32).required(),
+      name: Joi.string().required(),
     },
   },
   login: {
-    body: {
-      email: joi.string().email().required(),
-      password: joi.string().required(),
+    [Segments.BODY]: {
+      email: Joi.string().email().required(),
+      password: Joi.string().required(),
     },
   },
   update: {
-    body: {
-
-    },
+    body: {},
   },
 };

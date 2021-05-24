@@ -4,17 +4,16 @@ import userController from '../../controllers/user.controller';
 import userSchema from '../../constants/schema/user.schema';
 
 const router = express.Router();
-
-const schemaValidator = require('express-joi-validator');
+import { celebrate } from 'celebrate';
 
 router.post(
   '/register',
-  schemaValidator(userSchema.register),
+  celebrate(userSchema.register),
   userController.register,
 );
 router.post(
   '/login',
-  schemaValidator(userSchema.login),
+  celebrate(userSchema.login),
   userController.login,
 );
 router.get('/me', userController.self);
