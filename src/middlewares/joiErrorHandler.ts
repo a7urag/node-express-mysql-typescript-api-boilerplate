@@ -1,16 +1,8 @@
 import express from 'express';
 import * as HttpStatus from 'http-status-codes';
-import { IError } from './apiErrorHandler';
+import { CelebrateError, isCelebrateError } from 'celebrate';
+import { ValidationError } from 'joi';
 
-interface IJoiErrorDetail {
-  message?: string;
-  path?: string;
-}
-
-interface IJoiError extends IError {
-  isJoi?: boolean;
-  details?: Array<IJoiErrorDetail>;
-}
 /**
  * Joi error handler middleware
  *
@@ -21,21 +13,20 @@ interface IJoiError extends IError {
  *
  */
 export default (
-  err: IJoiError,
+  err: CelebrateError,
   req: express.Request,
   res: express.Response,
   next: express.NextFunction,
 ) => {
-  if (err.isJoi) {
+  if (isCelebrateError(err)) {
+    const details: string[] = [];
+    err.details.forEach((error1: ValidationError) =>
+      error1.details.forEach((value) => details.push(value.message)),
+    );
     const error = {
+      details: details.join(','),
       code: HttpStatus.BAD_REQUEST,
       message: HttpStatus.getStatusText(HttpStatus.BAD_REQUEST),
-      details:
-        err.details &&
-        err.details.map(err => ({
-          message: err.message,
-          param: err.path,
-        })),
     };
     return res.status(HttpStatus.BAD_REQUEST).json(error);
   }
