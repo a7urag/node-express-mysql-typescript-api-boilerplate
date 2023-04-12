@@ -24,9 +24,9 @@ export default async (
   next: express.NextFunction,
 ) => {
   if (
-    application.authorizationIgnorePath.indexOf(
-      `${req.originalUrl}`,
-    ) === -1
+    !application.authorizationIgnorePath.some((str) =>
+      `${req.originalUrl}`.includes(str),
+    )
   ) {
     const authorizationHeader = extractCookieFromRequest(
       req,
