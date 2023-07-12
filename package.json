@@ -52,7 +52,7 @@
     "express-jwt": "^6.0.0",
     "express-winston": "4.1.0",
     "http-status-codes": "2.1.4",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "morgan": "^1.9.1",
     "mysql": "^2.16.0",
     "reflect-metadata": "^0.1.13",
