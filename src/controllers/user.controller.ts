@@ -1,11 +1,11 @@
 import httpStatusCodes from 'http-status-codes';
 
-import userService from '../services/user.service';
-import IController from '../types/IController';
-import apiResponse from '../utilities/apiResponse';
-import { generateCookie } from '../utilities/encryptionUtils';
 import constants from '../constants';
 import locale from '../constants/locale';
+import IController from '../types/IController';
+import apiResponse from '../utilities/apiResponse';
+import userService from '../services/user.service';
+import { generateCookie } from '../utilities/encryptionUtils';
 
 const login: IController = async (req, res) => {
   const user = await userService.loginUser(

@@ -1,7 +1,8 @@
 import { getRepository } from 'typeorm';
+
 import { User } from '../entities/user/user.entity';
-import { generateHash, verifyHash } from '../utilities/encryptionUtils';
 import { sanitizeUser } from '../utilities/apiUtilities';
+import { generateHash, verifyHash } from '../utilities/encryptionUtils';
 
 const getUserById = async (userId: number) => {
   try {

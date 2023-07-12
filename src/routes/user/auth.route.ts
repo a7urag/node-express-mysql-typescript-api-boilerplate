@@ -1,10 +1,10 @@
 import express from 'express';
+import { celebrate } from 'celebrate';
 
 import userController from '../../controllers/user.controller';
 import userSchema from '../../constants/schema/user.schema';
 
 const router = express.Router();
-import { celebrate } from 'celebrate';
 
 router.post(
   '/register',

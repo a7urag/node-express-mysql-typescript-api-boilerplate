@@ -1,5 +1,5 @@
-import HttpStatus from 'http-status-codes';
 import express from 'express';
+import HttpStatus from 'http-status-codes';
 
 export interface IError {
   status?: number;

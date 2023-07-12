@@ -1,9 +1,9 @@
 import 'reflect-metadata';
 import { createConnection } from 'typeorm';
 
-import logger from './config/logger';
 import app from './config/express';
-const PORT = process.env.PORT || 5000;
+import logger from './config/logger';
+const PORT = process.env.PORT || 5009;
 
 createConnection()
   .then(() => {

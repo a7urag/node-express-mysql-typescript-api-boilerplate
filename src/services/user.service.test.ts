@@ -1,10 +1,9 @@
+import * as typeorm from 'typeorm';
+
 import UserService from './user.service';
 import { mockRepository } from '../tests/unit/dbMock';
-import * as typeorm from 'typeorm';
 import { User } from '../entities/user/user.entity';
 import { verifyHash } from '../utilities/encryptionUtils';
-
-const bcrypt = require('bcrypt');
 
 describe('User service', () => {
   test('getUserById with existing user', async () => {

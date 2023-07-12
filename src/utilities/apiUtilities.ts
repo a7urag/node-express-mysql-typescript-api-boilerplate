@@ -1,9 +1,9 @@
-import { NextFunction, Request, Response } from 'express';
 import HttpStatusCode from 'http-status-codes';
+import { NextFunction, Request, Response } from 'express';
 
-import { User } from '../entities/user/user.entity';
-import IRequest from '../types/IRequest';
 import ApiResponse from './apiResponse';
+import IRequest from '../types/IRequest';
+import { User } from '../entities/user/user.entity';
 
 const extractUserIdFromRequest = (req: IRequest) => {
   return req.user && req.user.id;

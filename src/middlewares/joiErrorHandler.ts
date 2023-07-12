@@ -1,7 +1,7 @@
 import express from 'express';
+import { ValidationError } from 'joi';
 import * as HttpStatus from 'http-status-codes';
 import { CelebrateError, isCelebrateError } from 'celebrate';
-import { ValidationError } from 'joi';
 
 /**
  * Joi error handler middleware

@@ -1,5 +1,5 @@
-import { mockResponse } from '../tests/unit/apiMock';
 import ApiResponse from './apiResponse';
+import { mockResponse } from '../tests/unit/apiMock';
 
 describe('utilities/ApiResponse', () => {
   let response = mockResponse();

@@ -1,13 +1,13 @@
 import express from 'express';
 import httpStatusCodes from 'http-status-codes';
 
+import Constants from '../constants';
+import IRequest from '../types/IRequest';
+import application from '../constants/application';
 import userService from '../services/user.service';
 import apiResponse from '../utilities/apiResponse';
 import { verifyCookie } from '../utilities/encryptionUtils';
 import { extractCookieFromRequest } from '../utilities/apiUtilities';
-import application from '../constants/application';
-import Constants from '../constants';
-import IRequest from '../types/IRequest';
 
 /**
  * Route authentication middleware to verify a token

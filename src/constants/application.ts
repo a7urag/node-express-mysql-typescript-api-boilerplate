@@ -1,4 +1,4 @@
-const base = '/api';
+const base: string = '/api';
 
 export default {
   url: {

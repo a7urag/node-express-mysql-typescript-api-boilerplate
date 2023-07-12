@@ -1,7 +1,7 @@
 import request, { CallbackHandler } from 'supertest';
+
 import routes from './auth.route';
 import app from '../../config/express';
-
 import userService from '../../services/user.service';
 
 describe('Test User Auth routes', () => {
@@ -68,6 +68,36 @@ describe('Test User Auth routes', () => {
       .expect(400)
       .expect((res: any) => {
         expect(userService.createUser).toHaveBeenCalledTimes(1);
+      })
+      .end(done);
+  });
+
+  it('User login with correct email', (done: CallbackHandler) => {
+    userService.loginUser = jest.fn().mockReturnValue({ id: 1 });
+    return request(app.use(routes))
+      .post('/api/user/auth/login')
+      .send({
+        email: 'test@gmail.com',
+        password: '123456',
+      })
+      .expect(200)
+      .expect((res: any) => {
+        expect(userService.loginUser).toHaveBeenCalledTimes(1);
+      })
+      .end(done);
+  });
+
+  it('User login with invalid email or password', (done: CallbackHandler) => {
+    userService.loginUser = jest.fn().mockReturnValue(null);
+    return request(app.use(routes))
+      .post('/api/user/auth/login')
+      .send({
+        email: 'test@gmail.com',
+        password: '123456',
+      })
+      .expect(400)
+      .expect((res: any) => {
+        expect(userService.loginUser).toHaveBeenCalledTimes(1);
       })
       .end(done);
   });
