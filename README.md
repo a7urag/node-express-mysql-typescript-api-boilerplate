@@ -92,7 +92,7 @@ No need to run migration in local as db sync is true.
     yarn migration:run
 
 ##### Deployment
-    yarn build-ts
+    yarn build
 ##### Run
     yarn start  
     
